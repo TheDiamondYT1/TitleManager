@@ -1,0 +1,32 @@
+#  _______ _ _   _      __  __                                   
+# |__   __(_) | | |    |  \/  |                                  
+#    | |   _| |_| | ___| \  / | __ _ _ __   __ _  __ _  ___ _ __ 
+#    | |  | | __| |/ _ \ |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|
+#    | |  | | |_| |  __/ |  | | (_| | | | | (_| | (_| |  __/ |   
+#    |_|  |_|\__|_|\___|_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
+#                                                __/ |                                                            |___/      
+#                                               |___/
+# TitleManager v1.0.0 by Luke (TheDiamondYT)
+#
+# For configuration info, visit:
+# https://github.com/TheDiamondYT1/TitleManager/wiki
+
+### 20 ticks = 1 second
+
+# Shows a title when a player joins
+welcome-title:
+  # Toggles the feature
+  enabled: true
+  text:
+    # The title shown
+    title: 'Welcome' 
+    # The subtitle shown
+    subtitle: '' 
+  duration:
+    # The time it takes for the title to fade in (in ticks)
+    fadeIn: 20
+    # The time it takes for the title to stay on the screen (in ticks)
+    stay: 80
+    # The time it takes for the title to fade out (in ticks)
+    fadeOut: 20
+
