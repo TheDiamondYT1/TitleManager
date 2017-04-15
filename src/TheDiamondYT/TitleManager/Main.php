@@ -29,7 +29,6 @@ class Main extends PluginBase {
     public function onEnable() {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-        $this->getServer()->getScheduler()->scheduleRepeatingTask(new AnimateTask($this, null, new \TheDiamondYT\TitleManager\api\animation\FlashingAnimation(["Lmfao", "dude", "hey", "ha", "§cMINEPLEX", "§bMINEPLEX"], 20)), 20);
     }
  
     /**
