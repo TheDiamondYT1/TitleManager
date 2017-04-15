@@ -38,9 +38,9 @@ class Main extends PluginBase {
      * @param ActionBar $message
      * @param Animation $animation
      */
-    public function sendActionMessage(Player $player, ActionBar $message, Animation $animation = null) {
-        if($animation !== null) {
-            $this->getServer()->getScheduler()->scheduleRepeatingTask(new AnimateTask($this, $player, $animation), $animation->getInterval());
+    public function sendActionMessage(Player $player, ActionBar $message) {
+        if($message->getAnimation() !== null) {
+            $this->getServer()->getScheduler()->scheduleRepeatingTask(new AnimateTask($this, $player, $message->getAnimation()), $message->getAnimation()->getInterval());
             return;
         } 
         $player->addActionBarMessage($message->getText());

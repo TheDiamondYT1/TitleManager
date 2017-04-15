@@ -13,14 +13,17 @@
  */
  
 namespace TheDiamondYT\TitleManager\api;
+
+use TheDiamondYT\TitleManager\api\animation\Animation;
  
 class ActionBar {
     private $text;
+    private $animation; // TODO: support for multiple animations
  
     /**
      * @param string $text
      */
-    public function __construct(string $text) {
+    public function __construct(string $text = "") {
         $this->text = $text;
     }
      
@@ -29,5 +32,19 @@ class ActionBar {
      */
     public function getText(): string {
         return $this->text;
+    }
+    
+    /**
+     * @return Animation|null
+     */
+    public function getAnimation() {
+        return $this->animation;
+    }
+    
+    /**
+     * @param Animation
+     */
+    public function addAnimation(Animation $animation) {
+        $this->animation = $animation;
     }
 }
