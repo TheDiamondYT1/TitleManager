@@ -16,6 +16,7 @@ namespace TheDiamondYT\TitleManager;
  
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
+use pocketmine\network\protocol\SetTitlePacket;
 
 use TheDiamondYT\TitleManager\task\AnimateTask;
 use TheDiamondYT\TitleManager\api\animation\Animation;
@@ -24,28 +25,13 @@ use TheDiamondYT\TitleManager\api\Title;
 use TheDiamondYT\TitleManager\api\SubTitle;
  
 class Main extends PluginBase {
-    /* @feeling hatred */
-    const TYPE_CLEAR_TITLE = 0;
-    const TYPE_SET_TITLE = 2;
-    const TYPE_SET_SUBTITLE = 3;
-    const TYPE_SET_TIMES = 5;
-    
-    private $pmmp = true;
     private $useTip = false;
-    
-    private $setTitlePacket;
 
     public function onEnable() {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-        
-        $this->pmmp = method_exists(Player::class, "removeTitles");
-        $this->useTip = method_exists(Player::class, "addActionBarMessage");
-        if(class_exists("\\pocketmine\\network\\mcpe\\protocol\\SetTitlePacket")) {
-            $this->setTitlePacket = new \pocketmine\network\mcpe\protocol\SetTitlePacket();
-        } else {
-            $this->setTitlePacket = new \pocketmine\network\protocol\SetTitlePacket();
-        }
+           
+        $this->useTip = !method_exists(Player::class, "sendActionBar");
     }
  
     /**
@@ -63,7 +49,7 @@ class Main extends PluginBase {
         if($this->useTip === true) {
             $player->sendTip($message->getText());
         } else {
-            $player->addActionBarMessage($message->getText());
+            $player->sendActionBar($message->getText());
         }
     }
     
@@ -75,7 +61,7 @@ class Main extends PluginBase {
      */
     public function sendTitle(Player $player, Title $title) {
         $this->sendTitleDuration($player, $title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
-        $this->sendTitlePacket($player, $title->getText(), self::TYPE_SET_TITLE);
+        $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_TITLE);
     } 
     
     /**
@@ -85,7 +71,7 @@ class Main extends PluginBase {
      * @param SubTitle $subtitle
      */
     public function sendSubTitle(Player $player, SubTitle $subtitle) {
-        $this->sendTitlePacket($player, $subtitle->getText(), self::TYPE_SET_SUBTITLE);
+        $this->sendTitlePacket($player, $subtitle->getText(), SetTitlePacket::TYPE_SUB_TITLE);
     }
     
     /**
@@ -97,7 +83,7 @@ class Main extends PluginBase {
     public function sendSubTitleWithoutTitle(Player $player, SubTitle $subtitle) {
         $this->sendTitleDuration($player, $subtitle->getFadeInTime(), $subtitle->getStayTime(), $subtitle->getFadeOutTime());
         $this->sendSubTitle($player, $subtitle);
-        $this->sendTitlePacket($player, "", self::TYPE_SET_TITLE);
+        $this->sendTitlePacket($player, "", SetTitlePacket::TYPE_TITLE);
     }
     
     /**
@@ -110,7 +96,7 @@ class Main extends PluginBase {
     public function sendTitles(Player $player, Title $title, SubTitle $subtitle) {
         $this->sendTitleDuration($player, $title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
         $this->sendSubTitle($player, $subtitle);
-        $this->sendTitlePacket($player, $title->getText(), self::TYPE_SET_TITLE); // TODO: uneeded?
+        $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_TITLE); // TODO: uneeded?
     }
     
     /**
@@ -137,13 +123,9 @@ class Main extends PluginBase {
      * @param Player $player
      */
     public function clearTitles(Player $player) {
-        if($this->pmmp === true) {
-            $player->removeTitles();
-        } else {
-            $pk = $this->setTitlePacket;
-            $pk->type = self::TYPE_CLEAR_TITLE;
-            $player->dataPacket($pk);
-        }
+        $pk = new SetTitlePacket();
+        $pk->type = self::TYPE_CLEAR;
+        $player->dataPacket($pk);
     }
     
    /************** INTERNAL METHODS **************/
@@ -157,7 +139,7 @@ class Main extends PluginBase {
     * @param int    $type
     */
     private function sendTitlePacket(Player $player, string $text, int $type) {
-        $pk = $this->setTitlePacket;
+        $pk = new SetTitlePacket();
         $pk->type = $type;
         $pk->text = $text;
         $player->dataPacket($pk);
@@ -174,11 +156,11 @@ class Main extends PluginBase {
      */
     private function sendTitleDuration(Player $player, int $fadeIn, int $stay, int $fadeOut) {
         if($fadeIn >= 0 and $stay >= 0 and $fadeOut >= 0) {
-            $pk = $this->setTitlePacket;
-            $pk->type = self::TYPE_SET_TIMES;
-            $pk->fadeInTime = $fadeIn;
-            $pk->stayTime = $stay;
-            $pk->fadeOutTime = $fadeOut;
+            $pk = new SetTitlePacket();
+            $pk->type = SetTitlePacket::TYPE_TIMES;
+            $pk->fadeInDuration = $fadeIn;
+            $pk->duration = $stay;
+            $pk->fadeOutDuration = $fadeOut;
             $player->dataPacket($pk);
         }
     }
