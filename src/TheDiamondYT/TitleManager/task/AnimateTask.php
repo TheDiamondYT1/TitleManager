@@ -33,6 +33,6 @@ class AnimateTask extends PluginTask {
     
     public function onRun($tick) {
         $anim = $this->animation->animate();
-        $this->getOwner()->sendActionMessage($this->player, new ActionBar($anim));
+        $this->getOwner()->sendActionBarMessage($this->player, new ActionBar($anim));
     }
 }
