@@ -3,6 +3,8 @@ An advanced title managing plugin for [PocketMine-MP](http://pmmp.io).
 
 This plugin is based off the [TitleManager plugin](https://www.spigotmc.org/resources/titlemanager.1049/) by [@Puharesource](https://github.com/Puharesource)
 
+[Tesseract Version](https://github.com/TheDiamondYT1/TitleManager/tree/tesseract)
+
 ### Features
 * Welcome title
 * Easy to use API
