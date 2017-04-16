@@ -60,6 +60,7 @@ class Main extends PluginBase {
      * @param Title  $title
      */
     public function sendTitle(Player $player, Title $title) {
+        $this->resetTitles($player);
         $player->setTitleDuration($title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
         $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE);
     } 
@@ -71,6 +72,7 @@ class Main extends PluginBase {
      * @param SubTitle $subtitle
      */
     public function sendSubTitle(Player $player, SubTitle $subtitle) {
+        $this->resetTitles($player);
         $this->sendTitlePacket($player, $subtitle->getText(), SetTitlePacket::TYPE_SET_SUBTITLE);
     }
     
@@ -81,6 +83,7 @@ class Main extends PluginBase {
      * @param SubTitle $subtitle
      */
     public function sendSubTitleWithoutTitle(Player $player, SubTitle $subtitle) {
+        $this->resetTitles($player);
         $player->setTitleDuration($subtitle->getFadeInTime(), $subtitle->getStayTime(), $subtitle->getFadeOutTime());
         $this->sendSubTitle($player, $subtitle);
         $this->sendTitlePacket($player, "", SetTitlePacket::TYPE_SET_TITLE);
@@ -94,6 +97,7 @@ class Main extends PluginBase {
      * @param SubTitle $subtitle
      */
     public function sendTitles(Player $player, Title $title, SubTitle $subtitle) {
+        $this->resetTitles($player);
         $player->setTitleDuration($title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
         $this->sendSubTitle($player, $subtitle);
         $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE); // TODO: uneeded?
@@ -124,6 +128,17 @@ class Main extends PluginBase {
      */
     public function clearTitles(Player $player) {
         $player->removeTitles();
+    }
+    
+    /*
+     * Resets the title settings for the specified player.
+     *
+     * @param Player $player
+     */
+    public function resetTitles(Player $player) {
+        $pk = new SetTitlePacket();
+        $pk->type = SetTitlePacket::TYPE_RESET_TITLE;
+        $player->dataPacket($player);
     }
     
    /************** INTERNAL METHODS **************/
