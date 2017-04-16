@@ -25,10 +25,13 @@ use TheDiamondYT\TitleManager\api\Title;
 use TheDiamondYT\TitleManager\api\SubTitle;
  
 class Main extends PluginBase {
+    private $useTip = false;
 
     public function onEnable() {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+        
+        $this->useTip = method_exists(Player::class, "addActionBarMessage");
     }
  
     /**
@@ -43,7 +46,7 @@ class Main extends PluginBase {
             $this->getServer()->getScheduler()->scheduleRepeatingTask(new AnimateTask($this, $player, $message->getAnimation()), $message->getAnimation()->getInterval());
             return;
         } 
-        if(!method_exists(Player::class, "addActionBarMessage")) {
+        if($this->useTip === false) {
             $player->sendTip($message->getText());
         } else {
             $player->addActionBarMessage($message->getText());
@@ -57,7 +60,7 @@ class Main extends PluginBase {
      * @param Title  $title
      */
     public function sendTitle(Player $player, Title $title) {
-        $player->setTitleDuration($title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
+        $this->sendTitleDuration($player, $title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
         $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE);
     } 
     
@@ -78,7 +81,7 @@ class Main extends PluginBase {
      * @param SubTitle $subtitle
      */
     public function sendSubTitleWithoutTitle(Player $player, SubTitle $subtitle) {
-        $player->setTitleDuration($subtitle->getFadeInTime(), $subtitle->getStayTime(), $subtitle->getFadeOutTime());
+        $this->sendTitleDuration($player, $subtitle->getFadeInTime(), $subtitle->getStayTime(), $subtitle->getFadeOutTime());
         $this->sendSubTitle($player, $subtitle);
         $this->sendTitlePacket($player, "", SetTitlePacket::TYPE_SET_TITLE);
     }
@@ -91,7 +94,7 @@ class Main extends PluginBase {
      * @param SubTitle $subtitle
      */
     public function sendTitles(Player $player, Title $title, SubTitle $subtitle) {
-        $player->setTitleDuration($title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
+        $this->sendTitleDuration($player, $title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
         $this->sendSubTitle($player, $subtitle);
         $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE); // TODO: uneeded?
     }
@@ -122,6 +125,7 @@ class Main extends PluginBase {
     public function clearTitles(Player $player) {
         $player->removeTitles();
     }
+    
    
    /**
     * Internal method for sending the title packet.
@@ -136,5 +140,25 @@ class Main extends PluginBase {
         $pk->type = $type;
         $pk->text = $text;
         $player->dataPacket($pk);
+    }
+    
+    /**
+     * Internal method for sending the title duration packet.
+     * Provided for Tesseract compatibility.
+     *
+     * @param Player $player
+     * @param int    $fadeIn
+     * @param int    $stay
+     * @param int    $fadeOut
+     */
+    private function sendTitleDuration(Player $player, int $fadeIn, int $stay, int $fadeOut) {
+        if($fadeIn >= 0 and $stay >= 0 and $fadeOut >= 0) {
+            $pk = new SetTitlePacket();
+            $pk->type = SetTitlePacket::TYPE_SET_ANIMATION_TIMES;
+            $pk->fadeInTime = $fadeIn;
+            $pk->stayTime = $stay;
+            $pk->fadeOutTime = $fadeOut;
+            $player->dataPacket($pk);
+        }
     }
 }
