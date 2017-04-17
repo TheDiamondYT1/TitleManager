@@ -30,7 +30,7 @@ I recommend putting this code in your `onEnable` method and storing it in a vari
 
 ##### Example
 ```php
-    $this->titleManager = $this->getServer()->getPluginManager()->getPlugin("TitleManager");
+$this->titleManager = $this->getServer()->getPluginManager()->getPlugin("TitleManager");
 ```
 
 Or you could use
