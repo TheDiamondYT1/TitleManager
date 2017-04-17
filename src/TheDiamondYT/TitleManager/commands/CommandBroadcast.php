@@ -12,8 +12,19 @@
  * All rights reserved.
  */
  
-namespace TheDiamondYT\TitleManager\api;
+namespace TheDiamondYT\TitleManager\commands;
+
+use pocketmine\command\CommandSender;
+
+use TheDiamondYT\TitleManager\Main;
  
-class SubTitle extends Title {
+class CommandBroadcast extends TMSubCommand {
     
+    public function __construct(Main $plugin) {
+        parent::__construct($plugin, "broadcast", ["bc"]);
+    }
+    
+    public function execute(CommandSender $sender, array $args) {
+    
+    }
 }

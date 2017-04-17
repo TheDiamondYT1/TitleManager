@@ -23,6 +23,7 @@ use TheDiamondYT\TitleManager\api\animation\Animation;
 use TheDiamondYT\TitleManager\api\ActionBar;
 use TheDiamondYT\TitleManager\api\Title;
 use TheDiamondYT\TitleManager\api\SubTitle;
+use TheDiamondYT\TitleManager\commands\TMCommand;
  
 class Main extends PluginBase {
     private $useTip = false;
@@ -30,6 +31,7 @@ class Main extends PluginBase {
     public function onEnable() {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+        $this->getServer()->getCommandMap()->register("titlemanager", new TMCommand($this));
               
         $this->useTip = !method_exists(Player::class, "addActionBarMessage");
     }
@@ -100,7 +102,7 @@ class Main extends PluginBase {
         $this->resetTitles($player);
         $player->setTitleDuration($title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
         $this->sendSubTitle($player, $subtitle);
-        $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE); // TODO: uneeded?
+        $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE); 
     }
     
     /**
@@ -138,7 +140,7 @@ class Main extends PluginBase {
     public function resetTitles(Player $player) {
         $pk = new SetTitlePacket();
         $pk->type = SetTitlePacket::TYPE_RESET_TITLE;
-        $player->dataPacket($player);
+        $player->dataPacket($pk);
     }
     
    /************** INTERNAL METHODS **************/

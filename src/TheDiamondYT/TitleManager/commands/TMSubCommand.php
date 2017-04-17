@@ -12,8 +12,24 @@
  * All rights reserved.
  */
  
-namespace TheDiamondYT\TitleManager\api;
+namespace TheDiamondYT\TitleManager\commands;
+
+use TheDiamondYT\TitleManager\Main;
  
-class SubTitle extends Title {
+abstract class TMSubCommand {
+    private $plugin;
     
+    private $name;
+    
+    public function __construct(Main $plugin, string $name, array $aliases = []) {
+        $this->plugin = $plugin;
+        $this->name = $name;
+    }
+     
+    /**
+     * @return string
+     */
+    public function getName(): string {
+        return $this->name;
+    }
 }
