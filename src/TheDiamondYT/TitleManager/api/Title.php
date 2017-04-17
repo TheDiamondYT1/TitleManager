@@ -43,21 +43,21 @@ class Title {
     /**
      * @return int
      */
-    public function getFadeInTime(): int {
+    public function getFadeIn(): int {
         return $this->fadeIn;
     }
     
     /**
      * @return int
      */
-    public function getStayTime(): int {
+    public function getStay(): int {
         return $this->stay;
     }
     
     /**
      * @return int
      */
-    public function getFadeOutTime(): int {
+    public function getFadeOut(): int {
         return $this->fadeOut;
     }
 }

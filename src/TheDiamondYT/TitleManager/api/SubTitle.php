@@ -14,50 +14,6 @@
  
 namespace TheDiamondYT\TitleManager\api;
  
-class SubTitle {
-    private $text;
-    private $fadeIn;
-    private $stay;
-    private $fadeOut;
+class SubTitle extends Title {
     
-    /**
-     * @param string $text
-     * @param int    $fadeIn
-     * @param int    $stay
-     * @param int    $fadeOut
-     */
-    public function __construct(string $text, int $fadeIn = -1, int $stay = -1, int $fadeOut = -1) {
-        $this->text = $text;
-        $this->fadeIn = $fadeIn;
-        $this->stay = $stay;
-        $this->fadeOut = $fadeOut;
-    }
-    
-    /**
-     * @return string 
-     */
-    public function getText(): string {
-        return $this->text;
-    }
-    
-    /**
-     * @return int
-     */
-    public function getFadeInTime(): int {
-        return $this->fadeIn;
-    }
-    
-    /**
-     * @return int
-     */
-    public function getStayTime(): int {
-        return $this->stay;
-    }
-    
-    /**
-     * @return int
-     */
-    public function getFadeOutTime(): int {
-        return $this->fadeOut;
-    }
 }
