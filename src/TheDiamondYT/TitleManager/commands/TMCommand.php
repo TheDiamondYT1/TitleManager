@@ -8,7 +8,7 @@
  *    |_|  |_|\__|_|\___|_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
  *                                                __/ |                                                            |___/      
  *                                               |___/
- * TitleManager v1.0.0 by Luke (TheDiamondYT)
+ * TitleManager v1.0.1 by Luke (TheDiamondYT)
  * All rights reserved.
  */
  
@@ -17,11 +17,11 @@ namespace TheDiamondYT\TitleManager\commands;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
 
-use TheDiamondYT\TitleManager\Main;
+use TheDiamondYT\TitleManager\TitleManager;
  
 class TMCommand extends PluginCommand {
 
-    public function __construct(Main $plugin) {
+    public function __construct(TitleManager $plugin) {
         parent::__construct("titlemanager", $plugin);
         $this->setAliases(["tm"]);
         $this->setDescription("Main command for TitleManager.");

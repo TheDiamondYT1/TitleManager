@@ -8,7 +8,7 @@
  *    |_|  |_|\__|_|\___|_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
  *                                                __/ |                                                            |___/      
  *                                               |___/
- * TitleManager v1.0.0 by Luke (TheDiamondYT)
+ * TitleManager v1.0.1 by Luke (TheDiamondYT)
  * All rights reserved.
  */
  
@@ -25,13 +25,17 @@ use TheDiamondYT\TitleManager\api\Title;
 use TheDiamondYT\TitleManager\api\SubTitle;
 use TheDiamondYT\TitleManager\commands\TMCommand;
  
-class Main extends PluginBase {
+class TitleManager extends PluginBase {
     private $useTip = false;
     private static $instance = null;
 
-    public static function getInstance() : Main{
+    /**
+     * @return TitleManager
+     */
+    public static function getInstance(): TitleManager {
         return self::$instance;
     }
+    
     public function onEnable() {
         self::$instance = $this;
         $this->saveDefaultConfig();

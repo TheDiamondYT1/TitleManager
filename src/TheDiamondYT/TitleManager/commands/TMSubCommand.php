@@ -8,20 +8,20 @@
  *    |_|  |_|\__|_|\___|_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
  *                                                __/ |                                                            |___/      
  *                                               |___/
- * TitleManager v1.0.0 by Luke (TheDiamondYT)
+ * TitleManager v1.0.1 by Luke (TheDiamondYT)
  * All rights reserved.
  */
  
 namespace TheDiamondYT\TitleManager\commands;
 
-use TheDiamondYT\TitleManager\Main;
+use TheDiamondYT\TitleManager\TitleManager;
  
 abstract class TMSubCommand {
     private $plugin;
     
     private $name;
     
-    public function __construct(Main $plugin, string $name, array $aliases = []) {
+    public function __construct(TitleManager $plugin, string $name, array $aliases = []) {
         $this->plugin = $plugin;
         $this->name = $name;
     }

@@ -8,7 +8,7 @@
  *    |_|  |_|\__|_|\___|_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
  *                                                __/ |                                                            |___/      
  *                                               |___/
- * TitleManager v1.0.0 by Luke (TheDiamondYT)
+ * TitleManager v1.0.1 by Luke (TheDiamondYT)
  * All rights reserved.
  */
  
@@ -19,13 +19,13 @@ use pocketmine\scheduler\PluginTask;
 
 use TheDiamondYT\TitleManager\api\animation\Animation;
 use TheDiamondYT\TitleManager\api\ActionBar;
-use TheDiamondYT\TitleManager\Main;
+use TheDiamondYT\TitleManager\TitleManager;
  
 class AnimateTask extends PluginTask {
     public $player;
     public $animation;
     
-    public function __construct(Main $plugin, Player $player, Animation $animation) {
+    public function __construct(TitleManager $plugin, Player $player, Animation $animation) {
         parent::__construct($plugin);
         $this->player = $player;
         $this->animation = $animation;
