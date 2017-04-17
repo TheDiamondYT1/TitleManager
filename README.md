@@ -32,8 +32,9 @@ I recommend putting this code in your `onEnable` method and storing it in a vari
 
 ##### Example
 ```php
+use TheDiamondYT\TitleManager\Main as TitleManager;
 public function onEnable() {
-    $this->titleManager = $this->getServer()->getPluginManager()->getPlugin("TitleManager");
+    $this->titleManager = TitleManager::getInstance();
 }
 ```
 

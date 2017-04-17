@@ -27,8 +27,13 @@ use TheDiamondYT\TitleManager\commands\TMCommand;
  
 class Main extends PluginBase {
     private $useTip = false;
+    private static $instance = null;
 
+    public static function getInstance() : Main{
+        return self::$instance;
+    }
     public function onEnable() {
+        self::$instance = $this;
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getServer()->getCommandMap()->register("titlemanager", new TMCommand($this));
