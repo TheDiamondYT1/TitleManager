@@ -8,7 +8,7 @@
  *    |_|  |_|\__|_|\___|_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
  *                                                __/ |                                                            |___/      
  *                                               |___/
- * TitleManager v1.0.0 by Luke (TheDiamondYT)
+ * TitleManager v1.0.1 by Luke (TheDiamondYT)
  * All rights reserved.
  */
  
@@ -23,7 +23,7 @@ use TheDiamondYT\TitleManager\api\SubTitle;
 class EventListener implements Listener {
     private $plugin;
     
-    public function __construct(Main $plugin) {
+    public function __construct(TitleManager $plugin) {
         $this->plugin = $plugin;
     }
     

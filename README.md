@@ -6,9 +6,9 @@ This plugin is based off the [TitleManager plugin](https://www.spigotmc.org/reso
 ### Features
 * Welcome title
 * Easy to use API
+* Basic Animations API
 
 ### TODO
-* Animations API
 * Placeholders
 * Commands
 * Tasks
@@ -30,9 +30,15 @@ I recommend putting this code in your `onEnable` method and storing it in a vari
 
 ##### Example
 ```php
-public function onEnable() {
     $this->titleManager = $this->getServer()->getPluginManager()->getPlugin("TitleManager");
-}
+```
+
+Or you could use
+
+```php
+use TheDiamondYT\TitleManager\TitleManager;
+
+TitleManager::getInstance()
 ```
 
 #### TODO: finish this.

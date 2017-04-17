@@ -24,10 +24,19 @@ use TheDiamondYT\TitleManager\api\ActionBar;
 use TheDiamondYT\TitleManager\api\Title;
 use TheDiamondYT\TitleManager\api\SubTitle;
  
-class Main extends PluginBase {
+class TitleManager extends PluginBase {
     private $useTip = false;
+    private static $instance = null;
+    
+    /**
+     * @return TitleManager
+     */
+    public static function getInstance(): TitleManager {
+        return self::$instance;
+    }
 
     public function onEnable() {
+        self::$instance = $this;
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
            
