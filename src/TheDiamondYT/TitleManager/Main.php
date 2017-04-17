@@ -63,7 +63,7 @@ class Main extends PluginBase {
      */
     public function sendTitle(Player $player, Title $title) {
         $this->resetTitles($player);
-        $player->setTitleDuration($title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
+        $player->setTitleDuration($title->getFadeIn(), $title->getStay(), $title->getFadeOut());
         $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE);
     } 
     
@@ -86,7 +86,7 @@ class Main extends PluginBase {
      */
     public function sendSubTitleWithoutTitle(Player $player, SubTitle $subtitle) {
         $this->resetTitles($player);
-        $player->setTitleDuration($subtitle->getFadeInTime(), $subtitle->getStayTime(), $subtitle->getFadeOutTime());
+        $player->setTitleDuration($subtitle->getFadeIn(), $subtitle->getStay(), $subtitle->getFadeOut());
         $this->sendSubTitle($player, $subtitle);
         $this->sendTitlePacket($player, "", SetTitlePacket::TYPE_SET_TITLE);
     }
@@ -100,7 +100,7 @@ class Main extends PluginBase {
      */
     public function sendTitles(Player $player, Title $title, SubTitle $subtitle) {
         $this->resetTitles($player);
-        $player->setTitleDuration($title->getFadeInTime(), $title->getStayTime(), $title->getFadeOutTime());
+        $player->setTitleDuration($title->getFadeIn(), $title->getStay(), $title->getFadeOut());
         $this->sendSubTitle($player, $subtitle);
         $this->sendTitlePacket($player, $title->getText(), SetTitlePacket::TYPE_SET_TITLE); 
     }
